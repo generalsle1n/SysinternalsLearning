@@ -9,7 +9,7 @@
 
 DWORD WINAPI MyThreadFunction(LPVOID lpParam)
 {
-    printf("Thread Content");
+    printf("Thread Content\n");
     Sleep(20000);
     return 0;
 }
@@ -17,11 +17,14 @@ DWORD WINAPI MyThreadFunction(LPVOID lpParam)
 int main()
 {
     DWORD dwThreadIdArray;
-    printf("Create first Thread");
+    printf("Create first Thread\n");
     HANDLE Thread = CreateThread(NULL, 0, MyThreadFunction, 0, NULL, &dwThreadIdArray);
     WaitForSingleObject(Thread, INFINITE);
-    printf("Create second Thread");
+    printf("Create second Thread\n");
     Thread = CreateThread(NULL, 0, MyThreadFunction, 0, NULL, &dwThreadIdArray);
+    printf("Create third Thread for fiber");
+    HANDLE ThreadTwo = CreateThread(NULL, 0, MyThreadFunction, 0, NULL, &dwThreadIdArray);
+    ConvertThreadToFiber(ThreadTwo);
 }
 
 
